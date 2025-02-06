@@ -2,6 +2,7 @@
 The key idea is to create a registration simulation, after which information about registered users will be posted on the site.
 
 # Stucture 
+```
 .
 ├── backend
 │   ├── cmd          # main.go
@@ -15,3 +16,4 @@ The key idea is to create a registration simulation, after which information abo
 ├── migrations       # SQL скрипты
 ├── docker-compose.yml
 └── Dockerfile
+```
