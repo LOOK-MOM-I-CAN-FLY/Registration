@@ -17,3 +17,13 @@ The key idea is to create a registration simulation, after which information abo
 ├── docker-compose.yml
 └── Dockerfile
 ```
+
+PostgreSQL query: 
+```
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL
+);
+```
+how to start: docker-compose up --build
