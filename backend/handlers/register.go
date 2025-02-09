@@ -11,7 +11,7 @@ import (
 
 func RegisterUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Только POST-запросы", http.StatusMethodNotAllowed)
+		http.Error(w, "Только POST-reauests", http.StatusMethodNotAllowed)
 		return
 	}
 
