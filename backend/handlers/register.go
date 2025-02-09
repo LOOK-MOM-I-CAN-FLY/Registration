@@ -19,13 +19,13 @@ func RegisterUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	email := r.FormValue("email")
 
 	if name == "" || email == "" {
-		http.Error(w, "Заполните все поля", http.StatusBadRequest)
+		http.Error(w, "Fill in all the fields", http.StatusBadRequest)
 		return
 	}
 
 	_, err := db.Exec("INSERT INTO users (name, email) VALUES ($1, $2)", name, email)
 	if err != nil {
-		log.Println("Ошибка при вставке в БД:", err)
+		log.Println("Error when inserting into the database:", err)
 		http.Error(w, "Registartion error", http.StatusInternalServerError)
 		return
 	}
@@ -33,7 +33,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	rows, err := db.Query("SELECT id, name, email FROM users")
 	if err != nil {
-		log.Println("Ошибка получения пользователей:", err)
+		log.Println("Error receiving users:", err)
 		http.Error(w, "Error of loading list of users", http.StatusInternalServerError)
 		return
 	}
@@ -49,10 +49,10 @@ func RegisterUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		users = append(users, user)
 	}
 
-	// Отображение страницы с пользователями
+
 	tmpl, err := template.ParseFiles("frontend/templates/board.html")
 	if err != nil {
-		http.Error(w, "Ошибка загрузки страницы", http.StatusInternalServerError)
+		http.Error(w, "Error downloading page", http.StatusInternalServerError)
 		return
 	}
 	tmpl.Execute(w, users)
