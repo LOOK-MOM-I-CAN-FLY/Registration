@@ -26,15 +26,15 @@ func RegisterUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	_, err := db.Exec("INSERT INTO users (name, email) VALUES ($1, $2)", name, email)
 	if err != nil {
 		log.Println("Ошибка при вставке в БД:", err)
-		http.Error(w, "Ошибка регистрации", http.StatusInternalServerError)
+		http.Error(w, "Registartion error", http.StatusInternalServerError)
 		return
 	}
 
-	// Получение всех пользователей для отображения
+
 	rows, err := db.Query("SELECT id, name, email FROM users")
 	if err != nil {
 		log.Println("Ошибка получения пользователей:", err)
-		http.Error(w, "Ошибка загрузки списка пользователей", http.StatusInternalServerError)
+		http.Error(w, "Error of loading list of users", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
