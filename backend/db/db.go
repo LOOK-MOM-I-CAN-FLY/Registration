@@ -25,7 +25,7 @@ func InitDB() (*sql.DB, error) {
 		email TEXT UNIQUE NOT NULL
 	)`)
 	if err != nil {
-		log.Fatal("Ошибка создания таблицы:", err)
+		log.Fatal("Error creating the table:", err)
 	}
 
 	log.Println("Подключение к БД успешно")
