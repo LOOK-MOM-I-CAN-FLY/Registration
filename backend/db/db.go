@@ -18,7 +18,7 @@ func InitDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	// Создание таблицы, если её нет
+	// Creating a table if it doesn't exist
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
 		id SERIAL PRIMARY KEY,
 		name TEXT NOT NULL,
