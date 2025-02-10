@@ -28,6 +28,6 @@ func InitDB() (*sql.DB, error) {
 		log.Fatal("Error creating the table:", err)
 	}
 
-	log.Println("Подключение к БД успешно")
+	log.Println("Connection to the database is successful")
 	return db, nil
 }
