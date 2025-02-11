@@ -8,7 +8,7 @@ import (
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("frontend/templates/index.html")
 	if err != nil {
-		http.Error(w, "Ошибка загрузки страницы", http.StatusInternalServerError)
+		http.Error(w, "Error download page", http.StatusInternalServerError)
 		return
 	}
 	tmpl.Execute(w, nil)
