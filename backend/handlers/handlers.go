@@ -23,7 +23,7 @@ func (a *App) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
     var req struct {
         Username string `json:"username"`
-        Email    string `json:"email"`
+        Email    string `json:"emal"`
         Password string `json:"password"`
     }
 
