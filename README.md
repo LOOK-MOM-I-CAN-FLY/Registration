@@ -7,7 +7,7 @@ The key idea is to create a registration simulation, after which information abo
 ├── backend
 │   ├── cmd          # main.go
 │   ├── internal
-│   │   ├── db       # PostgreSQL взаимодействие
+│   │   ├── db       # PostgreSQL interaction
 │   │   ├── handlers # HTTP handlers
 │   │   └── models   # Структуры данных
 ├── frontend
