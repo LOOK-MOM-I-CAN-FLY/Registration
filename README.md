@@ -9,7 +9,7 @@ The key idea is to create a registration simulation, after which information abo
 │   ├── internal
 │   │   ├── db       # PostgreSQL interaction
 │   │   ├── handlers # HTTP handlers
-│   │   └── models   # Структуры данных
+│   │   └── models   # Data structures
 ├── frontend
 │   ├── static       # CSS/JS
 │   └── templates    # HTML
