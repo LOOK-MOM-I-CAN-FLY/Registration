@@ -13,7 +13,7 @@ The key idea is to create a registration simulation, after which information abo
 ├── frontend
 │   ├── static       # CSS/JS
 │   └── templates    # HTML
-├── migrations       # SQL скрипты
+├── migrations       # SQL scripts
 ├── docker-compose.yml
 └── Dockerfile
 ```
