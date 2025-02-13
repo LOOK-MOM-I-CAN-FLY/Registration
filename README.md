@@ -8,7 +8,7 @@ The key idea is to create a registration simulation, after which information abo
 │   ├── cmd          # main.go
 │   ├── internal
 │   │   ├── db       # PostgreSQL interaction
-│   │   ├── handlers # HTTP handler
+│   │   ├── handlers # HTTP handlers
 │   │   └── models   # Data structures
 ├── frontend
 │   ├── static       # CSS/JS
