@@ -32,7 +32,7 @@ func (a *App) RegisterHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    if req.Username == "" || req.Email == "" || req.Password == " " {
+    if req.Username == "" || req.Email == "" || req.Password == "" {
         http.Error(w, "All fields are required", http.StatusBadRequest)
         return
     }
