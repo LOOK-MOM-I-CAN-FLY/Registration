@@ -5,17 +5,28 @@ The key idea is to create a registration simulation, after which information abo
 ```
 .
 ├── backend
-│   ├── cmd          # main.go
-│   ├── internal
-│   │   ├── db       # PostgreSQL interaction
-│   │   ├── handlers # HTTP handlers
-│   │   └── models   # Data structures
+│   ├── cmd
+│   │   └── main.go
+│   └── internal
+│       ├── db
+│       │   └── db.go
+│       ├── handlers
+│       │   ├── api.go
+│       │   ├── home.go
+│       │   └── register.go
+│       └── models
+│           └── user.go
 ├── frontend
-│   ├── static       # CSS/JS
-│   └── templates    # HTML
-├── migrations       # SQL scripts
+│   ├── static
+│   │   ├── app.js
+│   │   └── style.css
+│   └── templates
+│       ├── board.html
+│       └── index.html
+├── migrations
 ├── docker-compose.yml
 └── Dockerfile
+
 ```
 
 PostgreSQL query: 
