@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
-    <link rel="stylesheet" href="/static/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Регистрация</title>
+	<link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Зарегистрируйтесь на доску</h1>
-    <form action="/register" method="POST">
-        <input type="text" name="name" placeholder="Имя" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <button type="submit">Регистрация</button>
-    </form>
+	<h1>Зарегистрируйтесь на доску</h1>
+	<!-- Для HTML-формы регистрации -->
+	<form action="/register" method="POST">
+		<input type="text" name="username" placeholder="Имя" required>
+		<input type="email" name="email" placeholder="Email" required>
+		<button type="submit">Регистрация</button>
+	</form>
+
+	<!-- Если хотите использовать API (например, через AJAX) – подключите app.js -->
+	<script src="/static/app.js"></script>
 </body>
 </html>
