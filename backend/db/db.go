@@ -2,15 +2,40 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"os"
 
 	_ "github.com/lib/pq"
-	"github.com/your_project/internal/models"
 )
 
-const dsn = "host=localhost port=5432 user=postgres password=yourpassword dbname=yourdb sslmode=disable"
-
 func InitDB() (*sql.DB, error) {
+	// Чтение параметров из переменных окружения
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+
+	// Значения по умолчанию, если переменные не заданы
+	if host == "" {
+		host = "localhost"
+	}
+	if port == "" {
+		port = "5432"
+	}
+	if user == "" {
+		user = "postgres"
+	}
+	if password == "" {
+		password = "yourpassword"
+	}
+	if dbname == "" {
+		dbname = "yourdb"
+	}
+
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
@@ -20,7 +45,7 @@ func InitDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	// Создаём таблицу, если её нет
+	// Создание таблицы, если её нет
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
 		id SERIAL PRIMARY KEY,
 		username TEXT NOT NULL,
@@ -34,27 +59,4 @@ func InitDB() (*sql.DB, error) {
 
 	log.Println("Connection to the database is successful")
 	return db, nil
-}
-
-func CreateUser(sqlDB *sql.DB, user *models.User) error {
-	query := "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id, created_at"
-	return sqlDB.QueryRow(query, user.Username, user.Email, user.PasswordHash).Scan(&user.ID, &user.CreatedAt)
-}
-
-func GetUsers(sqlDB *sql.DB) ([]models.User, error) {
-	rows, err := sqlDB.Query("SELECT id, username, email, created_at FROM users")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var users []models.User
-	for rows.Next() {
-		var u models.User
-		if err := rows.Scan(&u.ID, &u.Username, &u.Email, &u.CreatedAt); err != nil {
-			continue
-		}
-		users = append(users, u)
-	}
-	return users, nil
 }
