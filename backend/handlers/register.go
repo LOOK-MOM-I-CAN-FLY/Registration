@@ -5,54 +5,46 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 
-	"github.com/your_project/internal/models"
+	"github.com/your_project/internal/db"
 )
 
-func RegisterUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+func RegisterUser(w http.ResponseWriter, r *http.Request, sqlDB *sql.DB) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Only POST-reauests", http.StatusMethodNotAllowed)
+		http.Error(w, "Only POST requests are allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	name := r.FormValue("name")
+	// Используем имя поля "username" (см. index.html)
+	username := r.FormValue("username")
 	email := r.FormValue("email")
 
-	if name == "" || email == "" {
+	if username == "" || email == "" {
 		http.Error(w, "Fill in all the fields", http.StatusBadRequest)
 		return
 	}
 
-	_, err := db.Exec("INSERT INTO users (name, email) VALUES ($1, $2)", name, email)
-	if err != nil {
+	// Регистрируем пользователя без пароля (password_hash оставляем пустым)
+	query := "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id, created_at"
+	var id int
+	var createdAt string
+	if err := sqlDB.QueryRow(query, username, email, "").Scan(&id, &createdAt); err != nil {
 		log.Println("Error when inserting into the database:", err)
-		http.Error(w, "Registartion error", http.StatusInternalServerError)
+		http.Error(w, "Registration error", http.StatusInternalServerError)
 		return
 	}
 
-
-	rows, err := db.Query("SELECT id, name, email FROM users")
+	// Получаем список пользователей для отображения на доске
+	users, err := db.GetUsers(sqlDB)
 	if err != nil {
-		log.Println("Error receiving users:", err)
-		http.Error(w, "Error of loading list of users", http.StatusInternalServerError)
+		http.Error(w, "Error retrieving users", http.StatusInternalServerError)
 		return
 	}
-	defer rows.Close()
 
-	var users []models.User
-	for rows.Next() {
-		var user models.User
-		if err := rows.Scan(&user.ID, &user.Name, &user.Email); err != nil {
-			log.Println("Ошибка сканирования:", err)
-			continue
-		}
-		users = append(users, user)
-	}
-
-
-	tmpl, err := template.ParseFiles("frontend/templates/board.html")
+	tmpl, err := template.ParseFiles(filepath.Join("frontend", "templates", "board.html"))
 	if err != nil {
-		http.Error(w, "Error downloading page", http.StatusInternalServerError)
+		http.Error(w, "Error loading page", http.StatusInternalServerError)
 		return
 	}
 	tmpl.Execute(w, users)
