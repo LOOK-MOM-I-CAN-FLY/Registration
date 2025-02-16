@@ -1,15 +1,15 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
+	font-family: Arial, sans-serif;
+	text-align: center;
+	margin: 20px;
 }
 form {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 input {
-    margin: 5px;
-    padding: 10px;
+	margin: 5px;
+	padding: 10px;
 }
 button {
-    padding: 10px 20px;
+	padding: 10px 20px;
 }
