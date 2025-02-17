@@ -10,14 +10,14 @@ import (
 )
 
 func InitDB() (*sql.DB, error) {
-	// Чтение параметров из переменных окружения
+
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_NAME")
 
-	// Значения по умолчанию, если переменные не заданы
+
 	if host == "" {
 		host = "localhost"
 	}
@@ -45,7 +45,7 @@ func InitDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	// Создание таблицы, если её нет
+
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
 		id SERIAL PRIMARY KEY,
 		username TEXT NOT NULL,
