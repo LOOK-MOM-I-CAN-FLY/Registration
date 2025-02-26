@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Зарегистрированные пользователи</title>
+</head>
+<body>
+    <h1>Список пользователей</h1>
+    {{if .}}
+        <table border="1">
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+            </tr>
+            {{range .}}
+            <tr>
+                <td>{{.FirstName}}</td>
+                <td>{{.LastName}}</td>
+            </tr>
+            {{end}}
+        </table>
+    {{else}}
+        <p>Пока нет зарегистрированных пользователей.</p>
+    {{end}}
+    <br>
+    <a href="/">Вернуться к регистрации</a>
+</body>
+</html>
