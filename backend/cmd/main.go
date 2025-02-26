@@ -1,42 +1,59 @@
 package main
 
 import (
-	"database/sql"
-	"log"
+	"html/template"
 	"net/http"
-	"path/filepath"
+	"sync"
+)
 
-	_ "github.com/lib/pq"
-	"github.com/your_project/internal/db"
-	"github.com/your_project/internal/handlers"
+type User struct {
+	FirstName string
+	LastName  string
+}
+
+var (
+	users     []User
+	usersLock sync.Mutex
+	templates *template.Template
 )
 
 func main() {
-	// Инициализация БД
-	sqlDB, err := db.InitDB()
+	templates = template.Must(template.ParseGlob("templates/*.html"))
+
+	http.HandleFunc("/", registrationHandler)
+	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/users", usersHandler)
+
+	// Запуск сервера на порте 8080
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		log.Fatal("Ошибка инициализации БД:", err)
+		panic(err)
 	}
-	defer sqlDB.Close()
+}
 
-	// Раздача статических файлов (CSS, JS)
-	fs := http.FileServer(http.Dir(filepath.Join("frontend", "static")))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+func registrationHandler(w http.ResponseWriter, r *http.Request) {
+	templates.ExecuteTemplate(w, "index.html", nil)
+}
 
-	// Маршруты для HTML-страниц
-	http.HandleFunc("/", handlers.HomePage)
-	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
-		handlers.RegisterUser(w, r, sqlDB)
-	})
+func registerHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		firstName := r.FormValue("first_name")
+		lastName := r.FormValue("last_name")
 
-	// API-эндпоинты
-	http.HandleFunc("/api/register", func(w http.ResponseWriter, r *http.Request) {
-		handlers.RegisterAPI(w, r, sqlDB)
-	})
-	http.HandleFunc("/api/users", func(w http.ResponseWriter, r *http.Request) {
-		handlers.UsersAPI(w, r, sqlDB)
-	})
+		// Добавляем нового пользователя в список с блокировкой
+		usersLock.Lock()
+		users = append(users, User{FirstName: firstName, LastName: lastName})
+		usersLock.Unlock()
 
-	log.Println("Сервер запущен на :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+		// Перенаправляем на страницу со списком пользователей
+		http.Redirect(w, r, "/users", http.StatusSeeOther)
+	} else {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
+}
+
+func usersHandler(w http.ResponseWriter, r *http.Request) {
+	usersLock.Lock()
+	defer usersLock.Unlock()
+	templates.ExecuteTemplate(w, "users.html", users)
 }
