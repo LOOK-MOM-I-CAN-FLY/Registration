@@ -39,6 +39,9 @@ CREATE TABLE users (
 ```
 how to start: docker-compose up --build
 
+### First Page:
 <img width="1420" alt="Снимок экрана 2025-02-27 в 22 50 41" src="https://github.com/user-attachments/assets/cc0e9a8c-9d76-4fb4-b7b9-3f632910c4c6" />
 
+
+### Second Page:
 <img width="1423" alt="Снимок экрана 2025-02-27 в 22 51 23" src="https://github.com/user-attachments/assets/81866e70-1a4a-4cbd-866d-d6d676c82445" />
