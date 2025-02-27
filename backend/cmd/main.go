@@ -20,6 +20,9 @@ var (
 func main() {
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 
+	// Обслуживание статических файлов из папки static
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
 	http.HandleFunc("/", registrationHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/users", usersHandler)
