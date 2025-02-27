@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Зарегистрированные пользователи</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Список пользователей</h1>
-    {{if .}}
-        <table border="1">
-            <tr>
-                <th>Имя</th>
-                <th>Фамилия</th>
-            </tr>
-            {{range .}}
-            <tr>
-                <td>{{.FirstName}}</td>
-                <td>{{.LastName}}</td>
-            </tr>
-            {{end}}
-        </table>
-    {{else}}
-        <p>Пока нет зарегистрированных пользователей.</p>
-    {{end}}
-    <br>
-    <a href="/">Вернуться к регистрации</a>
+    <div class="container">
+        <h1>Список пользователей</h1>
+        {{if .}}
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .}}
+                    <tr>
+                        <td>{{.FirstName}}</td>
+                        <td>{{.LastName}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        {{else}}
+            <p>Пока нет зарегистрированных пользователей.</p>
+        {{end}}
+        <a href="/" class="btn">Вернуться к регистрации</a>
+    </div>
+    <script src="/static/script.js"></script>
 </body>
 </html>
