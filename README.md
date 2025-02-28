@@ -7,23 +7,13 @@ The key idea is to create a registration simulation, after which information abo
 ├── backend
 │   ├── cmd
 │   │   └── main.go
-│   └── internal
-│       ├── db
-│       │   └── db.go
-│       ├── handlers
-│       │   ├── api.go
-│       │   ├── home.go
-│       │   └── register.go
-│       └── models
-│           └── user.go
 ├── frontend
 │   ├── static
 │   │   ├── app.js
 │   │   └── style.css
 │   └── templates
-│       ├── board.html
+│       ├── users.html
 │       └── index.html
-├── migrations
 ├── docker-compose.yml
 └── Dockerfile
 
